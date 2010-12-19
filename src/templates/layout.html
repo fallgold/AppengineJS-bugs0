@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta content="{=h_description}" name="description" />
+	<title>{=h_title}</title>
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+	<link href="/1.css" rel="stylesheet"type="text/css" />
+</head>
+<body>
+	<div class="wrapper">
+		<div class="header">
+			<!--<div class="top"><a href="#"><span>login</span></a></div>-->
+			<div class="logo">{=h_logo}</div>
+			<div class="nav">
+				<div class="nav-items">
+					<ul>{=h_cates}</ul>
+				</div>
+			</div>
+			<div class="clear"></div>
+			<div class="sep"></div>
+		</div>
+		
+		<div class="content">
+			<div class="main">
+				{=main}
+			</div>
+			<div class="right">
+			{#include /about.inc.login.html}
+			{:if noaboutreturn}
+			{:e}
+				{#include /about.inc.return.html}
+			{/:if}
+			{:if about}
+				{=about}
+			{/:if}
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="footer">
+			<span class="fleft">
+			    © 2xxx－xxxx xxx, all rights reserved
+			</span>
+			<span class="fright">
+			    <!--<a href="#">
+			    	What the hell are you waiting for!
+			    </a>-->
+			    <!--<span class="signin">
+			    	{:lb}=str userMenu{:rb}
+			    </span>-->
+		    </span>
+		</div>
+	</div>
+	<script src="/jquery.js"></script>
+    <script src="/utils.js"></script>
+    {:if script}
+    <script>
+        {=script}
+    </script>
+    {/:if}
+</body>
+</html>

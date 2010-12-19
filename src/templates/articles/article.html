@@ -1,0 +1,103 @@
+{#template /layout.html}
+{#include /header.html}
+
+{#def main}
+{:s article}
+{#include /articles/article.inc.html}
+{/:s}
+
+<div class="comments">
+	<a name="comments"></a>
+	<div id="commentlist">
+	{:r comments}
+	{#include /comments/comment.inc.html}
+	{/:r}
+	</div>
+<form id="commentform" method="POST">
+    <input type="hidden" name="article" value="{=/article/key}" />
+    <div class="edit">
+		<ul>
+			<li>
+				{:s user}
+					<input style="width:150px;" type="text" name="author" value="{=name}" readonly required="true" placeholder="your name" />
+					<input type="hidden" name="author_id" value="{=id}" />
+				{:e}
+					<input style="width:150px;" type="text" name="author" value="" required="true" placeholder="your name" />
+					<input type="hidden" name="author_id" value="0" />
+				{/:s}
+				<span>&nbsp;&nbsp;(Name)</span>
+			</li>
+			<li>
+				<textarea name="content" id="content" style="height: 8em" placeholder="your comment">{=content}</textarea>
+			</li>
+			<li>
+				<div class="submit">
+			        <button type="submit">Comment</button>
+			    </div>
+			</li>
+		</ul>
+    </div>
+</form>
+</div>
+{/#def}
+
+{#def script}
+$(".article .DELETE").live("click", function (e) {
+    e.preventDefault();
+    if (confirm("确认删除?")) {
+        $.post(e.target.href, { _method: "DELETE" }, function () {
+            window.location.href = "/";
+        });
+        $("body").fadeOut();
+    }
+});
+
+$(".comment .DELETE").live("click", function (e) {
+    e.preventDefault();
+    if (confirm("确认删除?")) {
+        $(e.target).parent().parent().parent().fadeOut();
+        $.post(e.target.href, { _method: "DELETE" });
+    }
+});
+
+var form = $("#commentform");
+
+form.bind("submit", function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var f = e.target,
+        errors = {},
+        params = {
+            article: f.article.value,
+            author: f.author.value.trim(),
+            author_id: parseInt(f.author_id.value),
+           // email: f.email.value,
+           // uri: f.uri.value,
+            content: f.content.value.trim()
+        };
+
+    //if (!params.author) errors.author = "Please provide an author name";
+    //if (!params.email) errors.email = "Please provide an email";
+    if (!params.content) errors.content = "评论内容不能为空";
+    
+    showErrors(form, errors);
+    for(i in errors) {
+        return false;
+    }
+
+    $.post("/comments", params, function (res) {
+        if (res.errors) {
+            $("#waiting").remove();
+            showErrors(form, res.errors);
+            return false;
+        } else {
+            $("#waiting").remove();
+            $("#commentlist").append(res.html);
+            f.content.value = "";
+        }
+    });
+    
+    form.find(".submit").append('<img id="waiting" src="/ajax.gif" />');
+});
+{/#def}

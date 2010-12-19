@@ -1,0 +1,25 @@
+{#template /layout.html}
+{#include /header.html}
+
+{#def main}
+<div class="img_s">
+{:r albums}
+    <span><a href="{=uri}"><img src="{=src}" /><br />{=title}</a></span> 
+{:e}
+    empty
+{/:r}
+</div>
+{/#def}
+
+{#def about}
+{:! if admin}
+<div class="about">
+	<div class="rnav">+</div>
+	<div class="rcont">
+		<div class="title">
+			<a href="/photos/upload/">上传图片</a>
+		</div>
+	</div>
+</div>
+{:! /:if}
+{/#def}

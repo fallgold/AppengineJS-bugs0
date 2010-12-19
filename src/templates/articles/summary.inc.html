@@ -1,0 +1,7 @@
+<div class="article">
+	<div class="title">
+		<a href="/articles/article?key={=key}">{:if title}{=title}{:e}NULL{/:if}</a>
+	</div>
+	<div><span class="p1">{=date created}</span></div>
+	<div class="note">{:if summary}{=summary} {:if commentCount}(<a href="/articles/article?key={=key}#comments">{=commentCount} comments</a>){/:if} {:e}NULL{/:if}</div>
+</div>

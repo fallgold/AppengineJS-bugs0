@@ -1,0 +1,8 @@
+<div class="comment">
+    <div class="ctitle">
+    	<span class="p1">{=date created}</span>&nbsp;&nbsp;&nbsp;
+    	{:if uri}<a href="{=uri uri}" rel="nofollow">{=author}</a>{:e}{:if author}{=author}{:e}guest{/:if}{/:if}&nbsp;&nbsp;&nbsp;
+    	{:if /admin}<span><a href="/comments/comment?key={=key}" class="DELETE">delete</a></span>{/:if}
+    </div>
+    <pre class="cnote">{=html content}</pre>
+</div>

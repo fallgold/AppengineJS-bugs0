@@ -1,0 +1,22 @@
+{#def h_title}
+{:s article}
+	{:if title}{=title}{:e}{=/site_title}{/:if}
+{:e}
+	{=/site_title}
+{/:s}
+{/#def}
+
+{#def h_description}
+{=site_description}
+{/#def}
+
+{#def h_logo}
+<a href="/"><img src="/images/blank.gif" style="background:url(/images/0.jpg) no-repeat 0 0;" width="48" height="48">{=site_name}</a>
+{/#def}
+
+{#def h_cates}
+	{:r cates}
+		<li><a href="{=uri}" hidefocus="true"><span>{=name}</span></a>{:if last}{:e}<span class="vsep"></span>{/:if}</li>
+	{/:r}
+	<li class="search"><input> <a href="#" style="color:#aaa;">search</a></li>
+{/#def}

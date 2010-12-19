@@ -1,0 +1,74 @@
+{#template /layout.html}
+{#include /header.html}
+
+{#def main}
+<form id="articleform" method="POST" action="/articles/">
+{:s article}
+    <input type="hidden" name="key" value="{=key}" />
+    <div class="edit">
+		<ul>
+			<li>
+				<div>Title:</div>
+				<input type="text" name="title" value="{=title}" />
+			</li>
+			<li>
+				<div>Summary:</div>
+				<textarea name="summary" id="summary" class="richtextarea" style="height:50px">{=summary}</textarea>
+			</li>
+			<li>
+				<div>Content:</div>
+				<textarea name="content" id="content" class="richtextarea" style="height: 300px">{=content}</textarea>
+			</li>
+			<li>
+				<div>Tags:</div>
+				<input type="text" id="tagsString" name="tagsString" value="{=tagsString}" />
+			</li>
+			<li>
+				<div class="submit">
+			        <button type="submit">Save</button>
+			    </div>
+			</li>
+		</ul>
+    </div>
+{/:s article}
+</form>
+{/#def}
+
+{#def script}
+var form = $("#articleform");
+
+form.bind("submit", function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    var f = e.target,
+        errors = {},
+        params = {
+            key: f.key.value,
+            title: f.title.value.trim(),
+            summary: f.summary.value.trim(),
+            content: f.content.value.trim(),
+            tagsString: f.tagsString.value.trim()
+        };
+
+    if (!params.title) errors.title = "标题不能为空";
+    if (!params.content) errors.content = "文章内容不能为空";
+    
+    for (var i in errors) {
+        showErrors(form, errors);
+        return false;
+    }
+
+    $.post("/articles", params, function (res) {
+        if (res.errors) {
+            $("#waiting").remove();
+            showErrors(form, res.errors);
+            return false;
+        } else {
+            window.location.href = res.uri;
+        }
+    });    
+    
+    form.find("fieldset.submit").append('<img id="waiting" src="/ajax.gif" />');    
+});
+{/#def}

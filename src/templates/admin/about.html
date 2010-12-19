@@ -1,0 +1,66 @@
+{#template /layout.html}
+{#include /header.html}
+
+{#def main}
+{:s configs}
+<form id="articleform" method="POST" action="/admin/about/">
+    <div class="edit">
+		<ul>
+			<li>
+				<div>Name:</div>
+				<input type="text" name="name" value="{=name}" />
+			</li>
+			<li>
+				<div>Description:</div>
+				<textarea name="description" id="description" class="richtextarea" style="height:80px">{=description}</textarea>
+			</li>
+			<li>
+				<div>About:</div>
+				<textarea name="about" id="about" class="richtextarea" style="height: 150px">{=about}</textarea>
+			</li>
+			<li>
+				<div class="submit">
+			        <button type="submit">Save</button>
+			    </div>
+			</li>
+		</ul>
+    </div>
+</form>
+{/:s}
+{/#def}
+
+{#def script}
+var form = $("#articleform");
+
+form.bind("submit", function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    var f = e.target,
+        errors = {},
+        params = {
+            name: f.name.value.trim(),
+            description: f.description.value.trim(),
+            about: f.about.value.trim(),
+        };
+
+    if (!params.name) errors.title = "名字不能为空";
+    
+    for (var i in errors) {
+        showErrors(form, errors);
+        return false;
+    }
+
+    $.post("/admin/about/", params, function (res) {
+        if (res.errors) {
+            $("#waiting").remove();
+            showErrors(form, res.errors);
+            return false;
+        } else {
+            window.location.href = res.uri;
+        }
+    });    
+    
+    form.find("fieldset.submit").append('<img id="waiting" src="/ajax.gif" />');    
+});
+{/#def}

@@ -1,0 +1,19 @@
+<div class="article">
+	<div class="title">
+		{:if title}{=title}{:e}NULL{/:if}
+	</div>
+	<div><span class="p1">{=date created}</span></div>
+	<div class="note">{=str content}</div>
+	{:if tagsLinks}
+	<div class="op">
+		<a href="/tags">Tags</a>:&nbsp;&nbsp;{=str tagsLinks}
+	</div>
+	<div class="clear"></div>
+	{/:if}
+	{:if /admin}
+	<div class="op">
+        <a href="/articles/edit?key={=key}">edit</a><span class="vsep"></span>
+        <a href="/articles/article?key={=key}" class="DELETE">delete</a>
+	</div>
+	{/:if}
+</div>

@@ -1,0 +1,13 @@
+{#template /layout.html}
+{#include /header.html}
+
+{#def main}
+<p>
+You can login using one of the following services:
+</p>
+<ul>
+{:r openIdProviders}
+    <li><a href="{=str uri}">{=title}</a></li>
+{/:r}
+</ul>
+{/#def}

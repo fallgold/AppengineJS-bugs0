@@ -1,0 +1,174 @@
+{#template /layout.html}
+{#include /header.html}
+
+{#def main}
+<form id="uploadform" action="/photos/upload/" method="POST" enctype="multipart/form-data">
+    <div class="edit">
+		<ul>
+			<li class="fileinput">
+				<div>Photo:</div>
+				<input type="file" name="file" onchange="fileOnChange(this)" />
+			</li>
+			<li>
+				<div>AlbumTitle: (可以为空。每次上传都会建立新相册，默认则名字为上传日期[Y-m-d])</div>
+				<input type="text" name="title" value="{=title}" />
+			</li>
+			<li>
+				<div>AlbumDesc:</div>
+				<textarea name="summary" id="desc" style="height:50px">{=summary}</textarea>
+			</li>
+			<li>
+				<div class="submit">
+			        <button id="submitBtn" type="submit">Save</button>
+			    </div>
+			</li>
+		</ul>
+    </div>
+</form>
+<form id="uploadform01" onsubmit="alert('submit...')" action="/photos/upload/" method="POST" enctype="multipart/form-data" target="iframe_1" class="null">
+</form>
+<iframe name="iframe_1" id="iframe_1" src="/" class="null"></iframe>
+{/#def}
+
+
+{#def script}
+function fileOnChange(file) 
+{
+	if (!file.onChangeFlag) {
+		file.onChangeFlag = true;
+		$('.fileinput').append('<input type="file" name="file" onchange="fileOnChange(this)" />');
+	}
+};
+
+
+var form = $("#uploadform");
+var formUpload = document.getElementById('uploadform01');
+var gFsInputs = [];
+
+form.bind("submit", function (e) {
+    var f = e.target,
+        errors = {},
+        params = {
+            title: f.title.value.trim(),
+            desc: f.desc.value.trim(),
+        };
+
+   // if (!params.title) errors.title = "标题不能为空";
+    
+    var fsInputs;
+    if (!f.file.length) {
+    	fsInputs = [f.file];
+    } else {
+    	fsInputs = f.file;
+    }
+    
+    gFsInputs = [];
+    for (var i=0; i < fsInputs.length; i++) {
+    	if (fsInputs[i].value == '') {
+    		continue;
+    	} else if(!fsInputs[i].value.match(/.*\.(jpg|jpeg|gif|png)$/i)) {
+    		errors['file_'+i] = "只能上传jpg|gif|png图片 (photo " + (i+1) + " error)";
+    		continue;
+    	}
+    	gFsInputs.push(fsInputs[i]);
+    }
+    
+    if (gFsInputs.length == 0) {
+    	errors.file_a = "请选择图片文件";
+    }
+    
+    showErrors(form, errors);
+    for(i in errors) {
+        return false;
+    }
+	    
+	var button = document.getElementById('submitBtn');
+	button.disabled = true;
+	upload();
+    
+    return false;
+});
+
+function uploadFile(fsInput)
+{
+	// exchange file input
+   	// ff cant directly cloneNode with value
+   	// chrome will reset the input value
+   	var newFile = fsInput.cloneNode(true);
+   	fsInput.parentNode.appendChild(newFile);
+   	formUpload.innerHTML = '';
+   	formUpload.appendChild(fsInput);
+
+	formUpload.submit();
+
+	form.find(".submit").append('<div class="info">正在上传' + fsInput.value.replace(/(.*[\/|\\])?(.*?)$/, "$2") + '<img id="waiting" src="/ajax.gif" /></div>');
+}
+
+function uploadCallBack(ret, error) 
+{
+	if (ret != 0) {
+		form.find(".submit").append('<div class="error">上传出错: '+ error +'</div>');
+	}
+	
+	// ff cannt upload immediately
+	setTimeout(function() {
+		$("#waiting").remove();
+		upload();
+	}, 10);
+}
+
+function prepareReUpload()
+{
+	form.find("div.info").remove();
+	form.find("div.error").remove();
+	var tmpFs = $('.fileinput').find("input")
+	for (var j=tmpFs.length-1; j>0; j--) {
+		tmpFs[j].parentNode.removeChild(tmpFs[j]);
+		delete(tmpFs[j]);
+	}
+	var button = document.getElementById('submitBtn');
+	button.disabled = false;
+}
+
+function saveAlbum()
+{
+	var f = form[0];
+	var params = {
+        title: f.title.value.trim(),
+        desc: f.desc.value.trim(),
+    };
+
+	$.post("/photos/album/", params, function (ret) {
+		var s = '<div class="info">上传结束，<a href="#" onclick="prepareReUpload();return false;">继续上传</a>';
+		if (ret.ret != 0) {
+			form.find(".submit").append('<div class="error">上传出错: '+ ret.error +'</div>');
+		} else {
+			s += ' or <a href="'+ ret.error +'">查看相册</a>';
+		}
+		s += '</div>';
+		form.find(".submit").append(s);
+    });
+    
+    return true;
+}
+
+function upload()
+{
+	//saveAlbum();
+	//return false;
+	
+	for (var i in gFsInputs) {
+		try {
+	   		uploadFile(gFsInputs[i]);
+	   	} catch(e) {
+	   		form.find(".submit").append('<div class="error">上传出错: '+ e.description +'</div>');
+	   	}
+		delete(gFsInputs[i]);
+		return true;
+	}
+	
+	saveAlbum();
+	
+	return true;
+}
+{/#def}

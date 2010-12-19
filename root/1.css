@@ -1,0 +1,289 @@
+@charset "utf-8";
+
+/** 
+ * http://meyerweb.com/eric/tools/css/reset/ 
+ */
+/* v1.0 | 20080212 */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+
+/* remember to define focus styles! */
+:focus {
+	outline: 0;
+}
+
+/* remember to highlight inserts somehow! */
+ins {
+	text-decoration: none;
+}
+del {
+	text-decoration: line-through;
+}
+
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+
+/**
+ * defined reset
+ * 2010-11-10
+ */
+body { font: 14px Tahoma, Geneva, sans-serif; }
+input, button, textarea, select, optgroup, option { font-family: inherit; font-size: inherit; font-style: inherit; font-weight: inherit }
+input, button, textarea, select { *font-size: 100% }
+/* for webkit */
+textarea { resize: none }
+input[type=text]:focus,
+input[type=password]:focus,
+textarea:focus { outline: 0 }
+
+textarea{ font-family: Arial; overflow:auto; }
+input{font-size:12px;}
+input,textarea{border:1px solid #999;padding:2px}
+a{cursor:pointer}
+a:link { color: #3C859C; text-decoration: none; }
+a:visited { color: #3C859C; text-decoration: none; }
+a:hover { color: #FFFFFF; text-decoration: none; background: #003399; }
+a:active { color: #FFFFFF; text-decoration: none; background: #FF9933; }
+a img { border-width:0; }
+
+.clear {clear: both;}
+
+
+/**
+ * main
+ */
+.top {
+	float:right;
+	padding: 1px 5px;
+	font-size: 12px;
+	text-align: right;
+}
+.wrapper { 
+	width: 960px; 
+	margin: 0px auto;
+	padding: 3px 0;
+}
+.header .sep {
+	margin: 0px 0px 20px;
+	border-bottom:1px solid #C9D7F1;
+	/*border-bottom:1px solid #e3ecf0;*/
+}
+.content { 
+	min-height: 520px;
+}
+.logo { 
+	padding: 10px;
+}
+.logo a{ 
+	float:left;
+	margin-right:14px; 
+}
+.logo img { 
+	vertical-align:middle;
+	margin-right:12px;
+	margin-bottom:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+}
+.logo a,
+.logo a:link, .logo a:visited { font-size:28px;color:#333;font-family:Georgia;outline:none;}
+.logo a:hover, .logo a:active { background-color:transparent; }
+
+.vsep {
+	display:inline;
+	margin: 0 8px;
+	border-right:1px solid #C9D7F1;
+}
+.nav { 
+	float:right;
+	padding: 8px 0px 20px;
+}
+.nav-items ul li {
+	display:inline;
+	float:left;
+	height:24px;
+	position:relative;
+}
+.nav-items ul .search {
+	margin-top:-2px;
+	margin-left:25px;
+}
+
+.content .main { 
+	float: left; 
+	width: 630px;
+}
+.content .right { 
+	float:right;
+	width: 245px;
+	/*background:#e3ecf0;*/
+	padding: 20px 0px 0px 20px;
+}
+.p1 {
+	color:#666666;
+	font:12px/150% Arial,Helvetica,sans-serif;
+}
+.title {
+	font-size: 16px;
+	background:none repeat scroll 0 0 transparent;
+	color:#3C859C;
+	height:auto;
+	line-height:1.4;
+	margin-bottom:0;
+	margin-left:0;
+}
+.article {
+	padding-bottom: 30px;
+}
+.note {
+	font-size: 14px;
+	font-family:Arial,Helvetica,sans-serif;
+	overflow:hidden;
+	white-space:pre-wrap;
+	word-wrap:break-word;
+	padding: 12px 2px 4px 12px;
+	line-height:1.5;
+}
+.note span {
+	font-size: 11px;
+}
+.about {
+	margin:0px 0px 20px 0px;
+}
+.about .rnav {
+	float:left;
+	margin-left:-17px;
+	color:#2B4E5A;
+}
+.rcont .title{
+	color:#2B4E5A;
+}
+.footer {
+	border-top:1px solid #ddd;
+	padding:2px;
+	margin:10px;
+	text-align:center;
+}
+.fleft, .fright {
+	font-size: 12px;
+	padding: 2px 10px;
+}
+.fleft {
+	color:#aaa;
+}
+.signin a {
+	color:#ee0000;
+}
+.edit {
+	padding-top: 10px
+}
+.edit li {
+	padding: 2px;
+}
+.edit div {
+	padding: 6px 0px 0px;
+}
+.edit input, textarea, .submit {
+	width: 100%;
+}
+.edit .submit {
+	text-align: center;
+}
+.comments {
+	margin: 10px 0px 10px 30px
+}
+.ctitle {
+	padding: 1px 8px;
+	background-color: #eff;
+}
+.ctitle .DELETE{
+	float:right;
+}
+.cnote {
+	font-size: 12px;
+	padding: 8px 8px 15px 8px;
+	line-height:1.4;
+}
+.op {
+	float:right;
+	padding-bottom:5px;
+}
+.ctitle, .op {
+	padding-right:8px;
+}
+.error {
+	color:red;
+}
+.info {
+	color:green;
+}
+.page {
+	width: 100%;
+	margin-top: 20px;
+}
+.page a {
+	margin: 0px 20px 0px 5px;
+}
+.null {margin:0px;padding:0px;width:0px;height:0px;visibility:hidden;overflow:hidden;}
+.fileinput input {
+	margin-bottom:6px;
+}
+.img_s {
+	padding:0px;
+}
+.img_s span {
+	width: 160px;
+	height: 160px;
+}
+.img_m span {
+	width: 610px;
+	height: 610px;
+}
+.img_s span, .img_m span {
+	float:left;
+	padding:0px;
+	margin:10px 10px 20px 10px;
+	display:inline-block;
+	text-align:center;
+}
+.img_s span a img, .img_m span a img{
+	border:solid 1px #ccc;
+	padding: 1px;
+}
+	

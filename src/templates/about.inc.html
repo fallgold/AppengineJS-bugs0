@@ -1,0 +1,32 @@
+{:! if admin}
+<div class="about">
+	<div class="rnav">+</div>
+	<div class="rcont">
+		<div class="title">
+			<a href="/articles/edit">写文章</a>
+		</div>
+	</div>
+	<div class="rnav">+</div>
+	<div class="rcont">
+		<div class="title">
+			<a href="/photos/upload/">上传图片</a>
+		</div>
+	</div>
+	<div class="rnav">+</div>
+	<div class="rcont">
+		<div class="title">
+			<a href="/admin/about/">Admin</a>
+		</div>
+	</div>
+</div>
+{:! /:if}
+
+{#include /about.inc.tag.html}
+<div class="about">
+	<div class="rnav">&gt;</div>
+	<div class="rcont">
+		<div class="title">About
+		</div>
+		<div class="note">{=str about}</div>
+	</div>
+</div>

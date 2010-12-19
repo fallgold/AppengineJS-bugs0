@@ -1,0 +1,11 @@
+{:r articles}
+    {#include /articles/summary.inc.html}
+{:e}
+    empty
+{/:r}
+{:if articles}
+<div class="page">
+	{:if prev}<a href="{=prev}">新的</a>{/:if}
+	{:if next}<a href="{=next}">旧的</a>{/:if}
+</div>
+{/:if}

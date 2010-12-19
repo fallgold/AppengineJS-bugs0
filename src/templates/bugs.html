@@ -1,0 +1,37 @@
+{#template /layout.html}
+
+{#def breadcrumbs}
+<b>Blog</b>
+{/#def}
+
+{#def content}
+{:r articles}
+    {#include /articles/summary.inc.html}
+{:e}
+    no articles
+{/:r}
+{/#def}
+
+{#def aside}
+{#include /aside.inc.html}
+{/#def}
+
+<script language="javascript">
+var v = (document.compatMode && document.compatMode == 'CSS1Compat') ? document.documentElement : document.body;
+if (v.clientHeight-v.scrollHeight > 0) {
+	document.write('<div style="height:'+(v.clientHeight-v.scrollHeight)+'px"></div>')
+}
+var gi = 0;
+setInterval(function () {
+	if (gi++ >= 500)
+		return;
+	var s = '';
+	for (var i=0; i<10; i++) {
+		var x = parseInt(Math.random() * v.clientWidth);
+		var y = parseInt(Math.random() * v.clientHeight);
+		//s += '<div style="position:absolute;width: 40px;height:30px;top:'+y+';left:'+x+';background-color:blue;">abcd </div>';
+		s += '<div style="position:absolute;width:px;top:'+y+'px;left:'+x+'px;height:30px;">bug</div>';
+	}
+	document.getElementById('main').innerHTML += s;
+}, 500);
+</script>

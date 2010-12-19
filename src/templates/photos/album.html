@@ -1,0 +1,12 @@
+{#template /layout.html}
+{#include /header.html}
+
+{#def main}
+<div class="img_s">
+{:r photos}
+    <span><a href="{=uri}"><img src="{=src}" /></a></span> 
+{:e}
+    empty
+{/:r}
+</div>
+{/#def}
